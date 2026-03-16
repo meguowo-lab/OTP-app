@@ -137,7 +137,12 @@
                     align-items: stretch;
                 }
 
-                img{
+                .bonus-score{
+                    width: 1.2rem;
+                    height: 1.2rem;
+                }
+
+                .card-img{
                     width: 46px;
                     height: 32px;
                 }
@@ -164,7 +169,7 @@
                     <div class="card">
                         <div class="card-content">
                             <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                                <img src="imgs/card.png" style="margin-right: 12px;"> 
+                                <img src="imgs/card.png" style="margin-right: 12px;" class="card-img"> 
                                 <p>• 5154</p>
                             </div>
                             <p> 100000 </p>
@@ -176,9 +181,14 @@
                     <div class="card" style="width: max-content;">
                         <div class="card-content" style="display: flex; justify-content: space-between; flex-direction: column; row-gap: 16px">
                             <p style="font-weight: bold;">Бонусные рубли</p>
-                            <div style="display: flex; row-gap: 8px; flex-direction: column;">
-                                <div>
-                                    <p>346</p>
+                            <div style="display: flex; row-gap: 8px; flex-direction: column; justify-content: center;">
+                                <div style="display: flex;">
+                                    <div>
+                                        <p>346</p>
+                                    </div>
+                                    <div>
+                                        <img src="imgs/bonus-ruble.png" style="object-fit: contain;" class="bonus-score">
+                                    </div>
                                 </div>
                                 <p style="font-size: 9pt;">ОТП Карта бонусная</p>
                             </div>
@@ -283,7 +293,7 @@
                 <section>
                     <section>
                         <p style="font-size: 14pt; color: #717171;">В кошельке</p>
-                        <p style="font-size: 20pt;">73 518, 64Р</p>
+                        <p style="font-size: 20pt;">73 518, 64 ₽</p>
                     </section>
                     <card-section></card-section>
                 </section>
@@ -353,18 +363,18 @@
                                 </tr>
                                 <tr>
                                     <td><div><img src="imgs/flags/icon CNY.png">CNY</div></td>
-                                    <td>12</td>
-                                    <td>13</td>
+                                    <td>11,10</td>
+                                    <td>12,30</td>
                                 </tr>
                                 <tr>
                                     <td><div><img src="imgs/flags/icon EUR.png">EUR</div></td>
-                                    <td>12</td>
-                                    <td>13</td>
+                                    <td>88,50</td>
+                                    <td>96,50</td>
                                 </tr>
                                 <tr>
                                     <td><div><img src="imgs/flags/icon USD.png">USD</div></td>
-                                    <td>12</td>
-                                    <td>13</td>
+                                    <td>73,50</td>
+                                    <td>87,50</td>
                                 </tr>
                             </table>
                             <div style="display: flex; justify-content: center; margin-top: 24px;">
@@ -384,14 +394,14 @@
                         <div class="card">
                             <div class="card-content">
                                 <div>
-                                    <progress-bar bg-color="#F3F4F6" color="#CEFC68" name="Все операции" value="1" num-val="123" size="16px"></progress-bar>
+                                    <progress-bar bg-color="#F3F4F6" color="#CEFC68" name="Все операции" value="1" num-val="30,00 ₽" size="16px"></progress-bar>
                                 </div>
                             </div>
                         </div>
                         <div class="card" slot="content">
                             <div class="card-content">
-                                <progress-bar bg-color="#F3F4F6" color="#C838B1" name="Все операции" value="1" num-val="123"></progress-bar>
-                                <progress-bar bg-color="#F3F4F6" color="#9A99FF" name="Все операции" value="1" num-val="123"></progress-bar>
+                                <progress-bar bg-color="#F3F4F6" color="#C838B1" name="Все операции" value="1" num-val="20,00 ₽"></progress-bar>
+                                <progress-bar bg-color="#F3F4F6" color="#9A99FF" name="Все операции" value="1" num-val="10,00 ₽"></progress-bar>
                             </div>
                         </div>
                     </div>
