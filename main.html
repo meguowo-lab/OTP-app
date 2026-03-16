@@ -91,6 +91,10 @@
             customElements.define(NonOptionalService.getTemplateName(), NonOptionalService);
             customElements.define(OptionalService.getTemplateName(), OptionalService);
             customElements.define(ProgressBar.getTemplateName(), ProgressBar);
+
+            function deleteSelf(el){
+                
+            }
         </script>
     </head>
 
@@ -239,7 +243,7 @@
             <section>
                 <div class="card-head" style="margin-bottom: 8px;">
                     <p class="name"></p>
-                    <svg><use xlink:href="icons.svg#remove-icon"></use></svg>
+                    <button style="border: none; background-color: transparent" onclick="deleteSelf(this)"><svg><use xlink:href="icons.svg#remove-icon"></use></svg></button>
                 </div>
                 <slot name="content"></slot>
             </section>
@@ -406,7 +410,25 @@
                         </div>
                     </div>
                 </optional-service>
-                <div style="margin-bottom: 16px;"></div>
+                <optional-service>
+                    <div style="display: flex; column-gap: 8px; justify-content: center;" slot="content">
+                        <div class="card" style="aspect-ratio: 1/1; max-width: 164px;">
+                            <div class="card-content">
+                                <img src="imgs/thing1.png">
+                            </div>
+                        </div>
+                        <div class="card" style="aspect-ratio: 1/1; max-width: 164px;">
+                            <div class="card-content">
+                                <img src="imgs/thing2.png">
+                            </div>
+                        </div>
+                        <div class="card" style="aspect-ratio: 1/1; max-width: 164px;">
+                            <div class="card-content">
+                                <img src="imgs/thing3.png">
+                            </div>
+                        </div>
+                    </div>
+                </optional-service>
             </section>
             <footer style="display: flex; justify-content: space-around; align-items: center;">
                 <style>
