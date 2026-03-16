@@ -7,102 +7,91 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
         <script>
-            class MiniCard extends HTMLElement {
+            class BaseElement extends HTMLElement{
                 constructor() {
                     super();
-                    const template = document.getElementById('mini-card');
+                    const template = document.getElementById(this.constructor.getTemplateName());
                     const content = template.content.cloneNode(true);
                     this.attachShadow({ mode: 'open' }).appendChild(content);
                 }
 
+                static getTemplateName(){
+                    return null
+                }
+
+                getElement(name){
+                    return this.shadowRoot.querySelector(name);
+                }
+            }
+            
+            class MiniCard extends BaseElement {
+                constructor(){
+                    super()
+                }
                 connectedCallback() {
                     const text = this.getAttribute('text');
                     const imgHref = this.getAttribute('imgHref');
                     
-                    this.shadowRoot.querySelector('.text').textContent = text;
-                    this.shadowRoot.querySelector('.img').src = imgHref;
+                    this.getElement(".text").textContent = text;
+                    this.getElement(".img").src = imgHref;
+                }
+
+                static getTemplateName(){
+                    return "mini-card"
                 }
             }
 
-            customElements.define('mini-card', MiniCard);
-            console.log("aaa")
+            class CardSection extends BaseElement {
+                static getTemplateName(){
+                    return "card-section"
+                }
+            }
+
+            class NonOptionalService extends BaseElement {
+                connectedCallback() {
+                    this.getElement(".name").textContent = this.getAttribute("name")
+                }
+
+                static getTemplateName(){
+                    return "non-optional-service"
+                }
+            }
+
+            class OptionalService extends BaseElement {
+                connectedCallback() {
+                    this.getElement(".name").textContent = this.getAttribute("name")
+                }
+
+                static getTemplateName(){
+                    return "optional-service"
+                }
+            }
+
+            class ProgressBar extends BaseElement {
+                connectedCallback() {
+                    const progress = this.getElement(".progress")
+                    const bar = this.getElement(".bar")
+                    progress.style.backgroundColor = this.getAttribute("color")
+                    progress.style.flex = this.getAttribute("value")
+                    bar.style.backgroundColor = this.getAttribute("bg-color")
+                    bar.style.height = this.getAttribute("size") || "8px"
+                    this.getElement(".name").textContent = this.getAttribute("name")
+                    this.getElement(".value").textContent = this.getAttribute("num-val")
+
+                }
+                static getTemplateName(){
+                    return "progress-bar"
+                }
+            }
+
+            customElements.define(MiniCard.getTemplateName(), MiniCard);
+            customElements.define(CardSection.getTemplateName(), CardSection);
+            customElements.define(NonOptionalService.getTemplateName(), NonOptionalService);
+            customElements.define(OptionalService.getTemplateName(), OptionalService);
+            customElements.define(ProgressBar.getTemplateName(), ProgressBar);
         </script>
-    
-        <style>
-            *{
-                font-family: "Onest", sans-serif;
-                font-optical-sizing: auto;
-                font-style: normal;
-                --color-primary:#C1FF05;
-                --color-accent:#FF7F32;
-                --color-secondary: #9E6FC3;
-                --non-content-size: 10vh
-            }
-            
-            header{
-                background-color: #9E6FC3;
-                height: var(--non-content-size);
-            }
-            
-            footer{
-                width: 100%;
-                height: var(--non-content-size);
-                background-color: #FF7F32;
-            }
-
-            body{
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                background-color: darkslategray;
-            }
-            
-            .content > section{
-                flex-grow: 1;
-                overflow-y: auto;
-                padding: 0 8px 0 8px;
-            }
-            
-            .content{
-                background-color: #F3F4F6;
-                margin: 0;
-                width: 402px;
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .card{
-                display: flex;
-                width: 100%;
-                height: 100%;
-                border-radius: 16px;
-                background-color: white;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .card-card{
-                
-            }
-
-            .pay-grid{
-                row-gap: 8px;
-                display: grid;
-                grid-template-rows: 1fr 1fr;
-                width: 56px;
-                height: 136px;
-                height: fit-content;
-            }
-            .card-info{
-                display: flex;
-            }
-            img{
-                width: 100%;
-                height: 100%;
-            }
-        </style>
     </head>
 
     <body>
@@ -117,7 +106,6 @@
                     word-break: break-word;
                     margin: 0 0 16px 8px;
                     left: 0;
-
                 }
 
                 .content{
@@ -131,43 +119,321 @@
                 <p class="text"></p>
             </div>
         </template>
-        <div class="content">
-    
-            <header>
-                hi
-            </header>
-            <section id="content-body">
-    
+
+        <template id="card-section">
+            <style>
+                @import url("styles.css");
+                .buttons-col{
+                    row-gap: 8px;
+                    display: grid;
+                    grid-template-rows: 1fr 1fr;
+                }
+
+                section{
+                    width: 100%;
+                    display: flex;
+                    gap: 8px;
+                    align-items: stretch;
+                }
+
+                img{
+                    width: 46px;
+                    height: 32px;
+                }
+
+            </style>
+            <section style="overflow-x: auto;">
+                <div class="buttons-col">
+                    <div class="card">
+                        <div class="card-content" style="display: flex; align-items: center; justify-content: center;">
+                            <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" style="padding: 8px;">
+                                <use xlink:href="icons.svg#sbp-icon"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content" style="display: flex; align-items: center; justify-content: center;">
+                            <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" style="padding: 8px;">
+                                <use xlink:href="icons.svg#qr-icon"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
                 <div>
-                    <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                                <img src="imgs/card.png" style="margin-right: 12px;"> 
+                                <p>• 5154</p>
+                            </div>
+                            <p> 100000 </p>
+                            <p>ОТП Карта</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card" style="width: max-content;">
+                        <div class="card-content" style="display: flex; justify-content: space-between; flex-direction: column; row-gap: 16px">
+                            <p style="font-weight: bold;">Бонусные рубли</p>
+                            <div style="display: flex; row-gap: 8px; flex-direction: column;">
+                                <div>
+                                    <p>346</p>
+                                </div>
+                                <p style="font-size: 9pt;">ОТП Карта бонусная</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <template id="non-optional-service">
+            <style>
+                @import url("styles.css");
+                svg{
+                    width: 1.2rem;
+                    height: 1.2rem;
+                }
+            </style>
+            <section class="card">
+                <div class="card-content">
+                    <div class="card-head">
+                        <p class="name" style="font-weight: 600"></p>
+                        <svg>
+                            <use xlink:href="icons.svg#add-icon"></use>
+                        </svg>
+                    </div>
+                    <div>
+                        <slot name="content"></slot>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <template id="optional-service">
+            <style>
+                @import url("styles.css");
+                svg{
+                    width: 18px;
+                    height: 2px;
+                }
+                p{
+                    margin: 0;
+                }
+
+                .name{
+                    font-weight: 600;
+                }
+            </style>
+            <section>
+                <div class="card-head" style="margin-bottom: 8px;">
+                    <p class="name"></p>
+                    <svg><use xlink:href="icons.svg#remove-icon"></use></svg>
+                </div>
+                <slot name="content"></slot>
+            </section>
+        </template>
+
+        <template id="progress-bar">
+            <style>
+                @import url("styles.css");
+                .info{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 16px 0 8px 0;
+                }
+            </style>
+            <div class="info">
+                <p class="name"></p>
+                <p class="value"></p>
+            </div>
+            <div class="bar" style="display: flex; width: 100%; border-radius: 32px;">
+                <div class="progress" style="border-radius: 32px;"></div>
+            </div>
+        </template>
+
+
+        <div class="body-content">
+    
+            <header style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px 0 16px;">
+                <div style="width: fit-content;">
+                    <img src="imgs/user.png" style="height: 36px; object-fit: contain;">
+                </div>
+                <div style="display: flex; align-items: center; column-gap: 16px;">
+                    <div style="height: fit-content;">
+                        <img src="imgs/search.png" style="height: 36px; object-fit: contain;">
+                    </div>
+                    <div style="width: fit-content;">
+                        <img src="imgs/bell.png" style="height: 36px; object-fit: contain;">
+                    </div>
+                </div>
+            </header>
+            <section class="content">
+    
+                <div style="overflow-x: scroll; min-height: 120px;">
+                    <div style="display: flex;">
+                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
+                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
+                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
+                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
+                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
+                    </div>
                 </div>
                 <section>
                     <section>
-                        <p>В кошельке</p>
-                        <p>73 518, 64Р</p>
+                        <p style="font-size: 14pt; color: #717171;">В кошельке</p>
+                        <p style="font-size: 20pt;">73 518, 64Р</p>
                     </section>
-                    <section class="card-info">
-                        <div class="pay-grid">
-                            <div class="card">
-                                <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" style="padding: 8px;">
-                                    <use xlink:href="icons.svg#sbp-icon"></use>
-                                </svg>
-                            </div>
-                            <div class="card">
-                                <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" style="padding: 8px;">
-                                    <use xlink:href="icons.svg#qr-icon"></use>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="card" style="height: 147; width: 120;">
-                            <img href="imgs/card.png">
-                        </div>
-                    </section>
+                    <card-section></card-section>
                 </section>
+                <section>
+                    <non-optional-service name="Кредиты и займы">
+                    </non-optional-service>
+                </section>
+                <section>
+                    <non-optional-service name="abc">
+                        <div slot="content">aaaa</div>
+                    </non-optional-service>
+                </section>
+                <section>
+                    <div style="display: flex;">
+                        <p style="font-weight: 600;">Сервисы</p>
+                    </div>
+                </section>
+                <optional-service name="Курсы валют">
+                    <div slot="content" class="card">
+                        <div class="card-content">
+                            <table style="width: 100%; border-collapse: collapse; border-spacing: 32px;">
+                                <style>
+                                    @scope{
+                                        td{
+                                            padding: 16px 0 12px 0;
+                                        }
+
+                                        td div{
+                                            display: flex;
+                                            align-items: center;
+                                        }
+
+                                        img{
+                                            width: 24px;
+                                            margin-right: 8px;
+                                        }
+
+                                        td ~ td{
+                                            text-align: end;
+                                        }
+                                        th{
+                                            color: #717171;
+                                            font-size: 9pt;
+                                            font-weight: 500;
+                                        }
+                                        tr{
+                                            border-style: solid;
+                                            border-color: #EDF6FD;
+                                            border-width: 0 0 1px 0;
+                                            padding: 0 16px;
+                                        }
+
+                                        tr:first-child{
+                                            border: none;
+                                        }
+                                    }
+                                </style>
+                                <tr>
+                                    <th style="text-align: start;">Валюта</th>
+                                    <th style="width: 0;">Покупка</th>
+                                    <th style="width: 0; padding: 0 0 0 48px;">Продажа</th>
+                                </tr>
+                                <tr>
+                                    <td><div><img src="imgs/flags/icon CNY.png">CNY</div></td>
+                                    <td>12</td>
+                                    <td>13</td>
+                                </tr>
+                                <tr>
+                                    <td><div><img src="imgs/flags/icon EUR.png">EUR</div></td>
+                                    <td>12</td>
+                                    <td>13</td>
+                                </tr>
+                                <tr>
+                                    <td><div><img src="imgs/flags/icon USD.png">USD</div></td>
+                                    <td>12</td>
+                                    <td>13</td>
+                                </tr>
+                            </table>
+                            <div style="display: flex; justify-content: center; margin-top: 24px;">
+                                <button style="background-color: #BDF70D; border-radius: 12px; border: none; width: 100%; padding: 8px 0;">Обменять валюту</button>
+                            </div>
+                        </div>
+                    </div>
+                </optional-service>
+                <optional-service name="Актуальные сценарии">
+                    <section slot="content" style="display: flex; column-gap: 8px; max-height: 256px;">
+                        <img src="imgs/card1.png" style="max-height: 128px; object-fit: contain;">
+                        <img src="imgs/card2.png" style="max-height: 128px; object-fit: contain;">
+                    </section>
+                </optional-service>
+                <optional-service name="Аналитика">
+                    <div slot="content" style="display: flex; flex-direction: column; row-gap: 16px;">
+                        <div class="card">
+                            <div class="card-content">
+                                <div>
+                                    <progress-bar bg-color="#F3F4F6" color="#CEFC68" name="Все операции" value="1" num-val="123" size="16px"></progress-bar>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" slot="content">
+                            <div class="card-content">
+                                <progress-bar bg-color="#F3F4F6" color="#C838B1" name="Все операции" value="1" num-val="123"></progress-bar>
+                                <progress-bar bg-color="#F3F4F6" color="#9A99FF" name="Все операции" value="1" num-val="123"></progress-bar>
+                            </div>
+                        </div>
+                    </div>
+                </optional-service>
             </section>
-            <footer>
-                <div>
-                    <svg width="64px" height="64px"><use width="32px" height="32px" href="icons.svg#otp-icon"></use></svg>
+            <footer style="display: flex; justify-content: space-around; align-items: center;">
+                <style>
+                    @scope{
+                        svg{
+                            width: 24px;
+                            height: 24px;
+                        }
+                        use{
+                            width: 24px;
+                            height: 24px;
+                        }
+                    }
+                </style>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="height: min-content; width: fit-content;">
+                        <svg><use href="icons.svg#otp-icon"></use></svg>
+                    </div>
+                    <p style="font-size: 10pt; color: #85B914;">Главная</p>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="height: min-content; width: fit-content;">
+                        <svg><use href="icons.svg#clock-icon"></use></svg>
+                    </div>
+                    <p style="font-size: 10pt;">Главная</p>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="height: min-content; width: fit-content;">
+                        <svg><use href="icons.svg#pay-icon"></use></svg>
+                    </div>
+                    <p style="font-size: 10pt;">Главная</p>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="height: min-content; width: fit-content;">
+                        <svg><use href="icons.svg#chat-icon"></use></svg>
+                    </div>
+                    <p style="font-size: 10pt;">Главная</p>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="height: min-content; width: fit-content;">
+                        <svg><use href="icons.svg#buy-icon"></use></svg>
+                    </div>
+                    <p style="font-size: 10pt;">Главная</p>
                 </div>
             </footer>
         </div>

@@ -1,0 +1,78 @@
+*{
+    font-family: "Onest", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    --color-primary:#C1FF05;
+    --color-accent:#FF7F32;
+    --color-secondary: #9E6FC3;
+    --non-content-size: 10vh
+}
+
+p{
+    margin: 0;
+}
+
+header{
+    height: var(--non-content-size);
+}
+
+footer{
+    width: 100%;
+    height: var(--non-content-size);
+}
+
+body{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: darkslategray;
+}
+
+.body-content{
+    background-color: #F3F4F6;
+    max-width: 600px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+.content{
+    overflow-y: auto;
+    flex-grow: 1;
+    flex-direction: column;
+    display: flex;
+    gap: 24px;
+    padding: 0 8px 0 8px;
+}
+
+.card{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-content{
+    width: 100%;
+    padding: 8px 16px 8px 16px;
+}
+
+.card-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    margin: 0;
+}
