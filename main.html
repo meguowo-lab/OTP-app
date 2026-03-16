@@ -106,6 +106,7 @@
                     word-break: break-word;
                     margin: 0 0 16px 8px;
                     left: 0;
+                    font-size: 10pt;
                 }
 
                 .content{
@@ -274,10 +275,9 @@
                 <div style="overflow-x: scroll; min-height: 120px;">
                     <div style="display: flex;">
                         <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
-                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
-                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
-                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
-                        <mini-card text="Актуальные сценарии" imgHref="imgs/Plain.png"></mini-card>
+                        <mini-card text="" imgHref="imgs/scenarios/1.png"></mini-card>
+                        <mini-card text="" imgHref="imgs/scenarios/2.png"></mini-card>
+                        <mini-card text="" imgHref="imgs/scenarios/3.png"></mini-card>
                     </div>
                 </div>
                 <section>
@@ -293,14 +293,17 @@
                 </section>
                 <section>
                     <non-optional-service name="Вклады и счета">
-                        <div slot="content">
-                            <img src="imgs/vklad.png">
+                        <div slot="content" style="width: fit-content;">
+                            <img src="imgs/vklad.png" style="max-height: 48px; object-fit: contain;">
                         </div>
                     </non-optional-service>
                 </section>
                 <section>
-                    <div style="display: flex;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
                         <p style="font-weight: 600;">Сервисы</p>
+                        <div>
+                            <img width="25px" height="25px" src="imgs/settings.png" style="object-fit: contain;">
+                        </div>
                     </div>
                 </section>
                 <optional-service name="Курсы валют">
